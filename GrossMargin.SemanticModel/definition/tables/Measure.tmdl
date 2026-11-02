@@ -1,0 +1,1018 @@
+/// The measure host: every business measure of the model, by subject folder.
+table Measure
+	lineageTag: 0104d2e2-9486-4a9a-9209-a9cedb7af997
+
+	/// Net sales ([Sales Net Price]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Sales Net Price Actual Year' =
+			
+			YearToDay( [Sales Net Price] )
+		displayFolder: Sales\Net Price
+		lineageTag: 438bf3bc-1a64-4103-b095-2b797d7dd271
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Net sales ([Sales Net Price]), in the prior year: the date slicers' window one year back, inside last calendar year. Value.
+	measure 'Sales Net Price Prior Year' =
+			
+			PrevYear( [Sales Net Price] )
+		displayFolder: Sales\Net Price
+		lineageTag: 3bed7d11-c4d9-492d-94d1-ceaa799825fb
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Net sales ([Sales Net Price]), in the prior year up to the same day: the date slicers' window cut at today, one year back (1 January to today's date one year back when no slicer is set). Value.
+	measure 'Sales Net Price Prior Year YTD' =
+			
+			YearToDay( [Sales Net Price Prior Year] )
+		displayFolder: Sales\Net Price
+		lineageTag: feed67e0-89b8-4e96-8347-ba8ccd9d268e
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Distinct products sold ([Products Count]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Whole number.
+	measure 'Products Count Actual Year' =
+			
+			YearToDay( [Products Count] )
+		formatString: #,0
+		displayFolder: KPI\Products Count
+		lineageTag: 660cab0b-5ab5-4dca-bf5b-7394a306244b
+
+	/// Outlets with a sale ([Numeric Distribution]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Whole number.
+	measure 'Numeric Distribution Actual Year' =
+			
+			YearToDay( [Numeric Distribution] )
+		formatString: #,0
+		displayFolder: KPI\Numeric Distribution
+		lineageTag: 1af855d6-d892-4388-a744-481ca46f057e
+
+	/// Outlets with a sale ([Numeric Distribution]), in the prior year: the date slicers' window one year back, inside last calendar year. Whole number.
+	measure 'Numeric Distribution Prior Year' =
+			
+			PrevYear( [Numeric Distribution] )
+		formatString: #,0
+		displayFolder: KPI\Numeric Distribution
+		lineageTag: bf5d0822-b252-458f-aebe-1a858e111d9e
+
+	/// Outlets with a sale ([Numeric Distribution]), in the prior year up to the same day: the date slicers' window cut at today, one year back (1 January to today's date one year back when no slicer is set). Whole number.
+	measure 'Numeric Distribution Prior Year YTD' =
+			
+			YearToDay( [Numeric Distribution Prior Year] )
+		formatString: #,0
+		displayFolder: KPI\Numeric Distribution
+		lineageTag: a821571a-8059-4f4d-8f4d-39afac48274b
+
+	/// Extra discount this year to date as a share of sales at the regular selling price. Percentage.
+	measure 'Extra Discount Rate Actual Year' =
+			
+			DIVIDE(
+				[Extra Discount Actual Year],
+				[Sales Selling Price Actual Year],
+				0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trade Marketing\Discounts
+		lineageTag: 4b7270f3-b0b5-47e0-a398-496fd6eeaffc
+
+	/// Extra discount ([Extra Discount]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Extra Discount Actual Year' =
+			
+			YearToDay( [Extra Discount] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Discounts
+		lineageTag: 1c534fe4-ecc7-42eb-89a2-a3136becf240
+
+	/// Extra discount ([Extra Discount]), in the prior year: the date slicers' window one year back, inside last calendar year. Value.
+	measure 'Extra Discount Prior Year' =
+			
+			PrevYear( [Extra Discount] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Discounts
+		lineageTag: e7782e99-5ca4-4904-a209-8418ba193d13
+
+	/// Gross margin ([Gross Margin]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Percentage.
+	measure 'Gross Margin Actual Year' =
+			
+			YearToDay( [Gross Margin] )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Margin\Ratios
+		lineageTag: d68d6cf3-5669-41f9-aa8b-4a9105b38e4e
+
+	/// Gross margin ([Gross Margin]), in the prior year: the date slicers' window one year back, inside last calendar year. Percentage.
+	measure 'Gross Margin Prior Year' =
+			
+			PrevYear( [Gross Margin] )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Margin\Ratios
+		lineageTag: b553a55a-397f-48fd-9547-39955a0cb90b
+
+	/// Gross profit ([Gross Profit]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Gross Profit Actual Year' =
+			
+			YearToDay( [Gross Profit] )
+		formatString: #,0
+		displayFolder: Margin\Profit
+		lineageTag: 9c261528-3032-4c44-b203-030994fb2beb
+
+	/// Gross profit ([Gross Profit]), in the prior year: the date slicers' window one year back, inside last calendar year. Value.
+	measure 'Gross Profit Prior Year' =
+			
+			PrevYear( [Gross Profit] )
+		formatString: #,0
+		displayFolder: Margin\Profit
+		lineageTag: c64c1f2c-0ab8-476f-8873-da4d01331923
+
+	/// Percentage difference of gross margin ([Gross Margin]): this year to date against the prior year (the date slicers' window one year back), (actual - other) / other. Shown with an arrow, ▲ above and ▼ below.
+	measure 'Index Gross Margin Actual/Prior' =
+			
+			IndexDif([Gross Margin Actual Year], [Gross Margin Prior Year])
+		displayFolder: Margin\Ratios
+		lineageTag: c06f86c5-ad93-421c-972b-b9516254541a
+
+		formatStringDefinition = IndexFormat(SELECTEDMEASURE(), 0)
+
+		annotation RagColor = UpIsGood
+
+	/// Credit notes issued ([Credit Notes Issued]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Credit Notes Issued Actual Year' =
+			
+			YearToDay( [Credit Notes Issued] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Credit Notes Issued
+		lineageTag: 80b2310c-5470-4125-aa36-db8c1c09d2ff
+
+	/// Credit notes received ([Credit Notes Received]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Credit Notes Received Actual Year' =
+			
+			YearToDay( [Credit Notes Received] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Credit Notes Received
+		lineageTag: 53af8d8e-d51f-48c3-9c8e-5ded8ff5b3bc
+
+	/// Quantity sold ([Sales Quantity]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Units.
+	measure 'Sales Quantity Actual Year' =
+			
+			YearToDay( [Sales Quantity] )
+		displayFolder: Sales\Quantity
+		lineageTag: ebe11588-7495-4e13-bf9b-39bd5e7f141e
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Quantity sold ([Sales Quantity]), in the prior year: the date slicers' window one year back, inside last calendar year. Units.
+	measure 'Sales Quantity Prior Year' =
+			
+			PrevYear( [Sales Quantity] )
+		displayFolder: Sales\Quantity
+		lineageTag: 3ba96472-8ffc-4f66-8a5e-033f3d01ab58
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Quantity sold ([Sales Quantity]), in the prior year up to the same day: the date slicers' window cut at today, one year back (1 January to today's date one year back when no slicer is set). Units.
+	measure 'Sales Quantity Prior Year YTD' =
+			
+			YearToDay( [Sales Quantity Prior Year] )
+		displayFolder: Sales\Quantity
+		lineageTag: 02825d52-9de7-4c55-8ec2-201d07eded38
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Net sales: quantity x the net price the customer pays, after discounts and with VAT, on sales-out documents. The one sales figure of the model: call it, never rebuild it. Value.
+	measure 'Sales Net Price' =
+			
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity] * FactSalesLine[NetPrice]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		displayFolder: Calculation Roots\Sales
+		lineageTag: b1e1fc36-df41-470c-861c-a36c0812b76d
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Cost of sales: quantity x the average cost price, without VAT, on sales-out documents. Goods only, as every sales line is. Value.
+	measure 'Sales Cost Price' =
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity] * FactSalesLine[UnitCost]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		displayFolder: Calculation Roots\Sales
+		lineageTag: 35447dc8-40ce-48b2-a1de-9cded24c0f28
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Gross profit: net sales without VAT less the cost of sales, goods only. Value.
+	measure 'Gross Profit' =
+			
+			VAR _net_sales = [Sales Net Price ex VAT]
+			VAR _cost_of_sales = [Sales Cost Price]
+			RETURN
+			    _net_sales - _cost_of_sales
+		formatString: #,0
+		displayFolder: Calculation Roots\Profit
+		lineageTag: f49d8aa5-dcb5-411e-a5d1-188e645ea99a
+
+	/// Outlets with at least one sale on a sales-out document. Whole number.
+	measure 'Numeric Distribution' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(FactSalesLine[OutletId]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		formatString: #,0
+		displayFolder: Calculation Roots\KPI
+		lineageTag: 2c39d9aa-293f-4775-83d3-93548a28af5f
+
+	/// Distinct products sold on sales-out documents. Whole number.
+	measure 'Products Count' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(FactSalesLine[ProductId]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		formatString: #,0
+		displayFolder: Calculation Roots\KPI
+		lineageTag: fffb5b21-7afe-4001-ba30-fe153049eaa9
+
+	/// Credit notes issued to customers, without VAT, split by brand, as a positive amount: trade spend (part of Budget Spent). Value.
+	measure 'Credit Notes Issued' =
+			CALCULATE(
+			    SUM( FactCreditNote[Value] ),
+			    FactCreditNote[Direction] = "Issued"
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 9ca0230f-ffb5-4b2f-b06e-53908cfbef9c
+
+	/// Credit notes received from suppliers, without VAT, split by brand, as a positive amount added to the trade budget (Budget Accumulated). Blank on a single product: credit notes are booked on the brand, not on products. Value.
+	measure 'Credit Notes Received' =
+			-- booked per brand: on a single product there is nothing to show
+			IF(
+			    NOT ( ISFILTERED( DimProduct[ProductId] ) || ISFILTERED( DimProduct[ProductName] ) ),
+			    CALCULATE(
+			        SUM( FactCreditNote[Value] ),
+			        FactCreditNote[Direction] = "Received"
+			    )
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 5e5784b8-d1cb-41bd-9ac6-4e6d026a5c3a
+
+	/// Extra discount given on sales: quantity x the gap between the price after the regular discount and the net price, with VAT, on sales-out documents. Value.
+	measure 'Extra Discount' =
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity] * ( FactSalesLine[GrossPrice] - FactSalesLine[NetPrice] ) ),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 1d513ce5-ca0e-49a0-87bf-ce7622b868be
+
+	/// Sales at the regular selling price, before discounts, with VAT, on sales-out documents. Value.
+	measure 'Sales Selling Price' =
+			
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity] * FactSalesLine[ListPrice]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		displayFolder: Calculation Roots\Sales
+		lineageTag: e4efa2a4-982c-48df-ad38-45213e2e389b
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Sales at the regular price ([Sales Selling Price]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Sales Selling Price Actual Year' =
+			
+			YearToDay( [Sales Selling Price] )
+		displayFolder: Sales\Selling Price
+		lineageTag: b8ffee94-b314-410c-8135-49d76e8bc107
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Marketing accumulated ([Marketing Accumulated]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Marketing Accumulated Actual Year' =
+			
+			YearToDay( [Marketing Accumulated] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 32e0f75c-fa58-4df2-98a8-03f4e7ffc602
+
+	/// Trade budget accumulated this year to date: marketing accumulated, credit notes received and service invoices. Value.
+	measure 'Budget Accumulated Actual Year' = [Marketing Accumulated Actual Year] + [Credit Notes Received Actual Year] + [Service Invoices Actual Year]
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: de38d593-9467-4491-95bd-7b0141fade16
+
+	/// Quantity sold on sales-out documents. Units.
+	measure 'Sales Quantity' =
+			
+			CALCULATE(
+				SUM(FactSalesLine[Quantity]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		displayFolder: Calculation Roots\Sales
+		lineageTag: 4aad2dc3-372e-46bb-a840-b9655379b40b
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Marketing budget accrued: quantity sold x the marketing coefficient of each line - the price after the regular discount, without VAT, less the cost price, less the four brand rates taken on the net price without VAT - summed. The price calculation. Value. Negative where the price does not cover cost and the rates - that is the calculation's output, not an error.
+	measure 'Marketing Accumulated' =
+			-- Summed, not averaged: the budget is the per-piece coefficient x quantity, so it
+			-- accumulates across lines. The rates are read per line from DimBrand, so the sum holds
+			-- across products.
+			VAR _rows =
+			    CALCULATETABLE(
+			        FactSalesLine,
+			        DimDocumentType[IsSalesOut] = TRUE
+			    )
+			RETURN
+			    SUMX(
+			        _rows,
+			        VAR _rate =
+			            RELATED( DimBrand[DistributionCostRate] )
+			                + RELATED( DimBrand[DistributionProfitRate] )
+			                + RELATED( DimBrand[AnnualBonusRate] )
+			                + RELATED( DimBrand[SecondaryPositionRate] )
+			        -- the price after the regular discount (GrossPrice), less cost, less
+			        -- the rates charged on the net price; both prices without VAT
+			        VAR _gross_price = FactSalesLine[GrossPrice] * FactSalesLine[ExVatFactor]
+			        VAR _net_price = FactSalesLine[NetPrice] * FactSalesLine[ExVatFactor]
+			        VAR _coefficient = _gross_price - FactSalesLine[UnitCost] - _net_price * _rate
+			        RETURN
+			            FactSalesLine[Quantity] * _coefficient
+			    )
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 301ee65a-4460-47cd-b5a2-f3265ec81255
+
+	/// Trade budget spent this year to date: the trade terms, the extra discount without VAT and the credit notes issued. Value.
+	measure 'Budget Spent Actual Year' = [Trade Terms Spent Actual Year] + YearToDay( [Extra Discount Without VAT] ) + [Credit Notes Issued Actual Year]
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 85800d0b-1c14-4a02-bbe9-7da67ec882a6
+
+	/// Trade budget accumulated less spent, this year to date; negative when more was spent than accumulated. Value.
+	measure 'Budget Difference Actual Year' =
+			
+			[Budget Accumulated Actual Year]-
+			[Budget Spent Actual Year]
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 0d2d3950-2ff2-40a1-b079-88bdc1ff10e4
+
+	/// Gross profit at the regular price: list price without VAT, before discounts, less cost price. The same scope as Gross Profit, so the two differ by exactly the discounts given. Value.
+	measure 'Gross Profit at Regular Price' =
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity] * ( FactSalesLine[ListPrice] * FactSalesLine[ExVatFactor] - FactSalesLine[UnitCost] ) ),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		formatString: #,0
+		displayFolder: Calculation Roots\Profit
+		lineageTag: 4a854a81-f8cc-42fc-b6b0-43628a807759
+
+	/// Gross profit at the regular price ([Gross Profit at Regular Price]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Gross Profit at Regular Price Actual Year' =
+			
+			YearToDay( [Gross Profit at Regular Price] )
+		formatString: #,0
+		displayFolder: Margin\Plan
+		lineageTag: 7a7484a3-1a27-46de-ac2e-9632b32710fe
+
+	/// Plan gross margin, year to date: Gross Profit at Regular Price over regular sales without VAT - the same base as Gross Margin, so plan and actual margin differ only by the discounts. Percentage.
+	measure 'Gross Margin at Regular Price Actual Year' =
+			VAR _regular_sales = YearToDay( [Sales Selling Price ex VAT] )
+			RETURN
+			    DIVIDE( [Gross Profit at Regular Price Actual Year], _regular_sales, 0 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Margin\Plan
+		lineageTag: 11385fc6-d212-4cda-bda7-79122e312105
+
+	/// Gross margin: gross profit over net sales without VAT, goods only. Percentage.
+	measure 'Gross Margin' =
+			
+			VAR _gross_profit = [Gross Profit]
+			VAR _net_sales = [Sales Net Price ex VAT]
+			
+			RETURN
+			    DIVIDE( _gross_profit, _net_sales)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Calculation Roots\Profit
+		lineageTag: 73b2c417-1fad-4839-8d15-a79850f103aa
+
+	/// Net sales without VAT: quantity x the net price with the VAT on the line taken out, on sales-out documents. The base of Gross Margin and of the brand rates. Value.
+	measure 'Sales Net Price ex VAT' =
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity] * FactSalesLine[NetPrice] * FactSalesLine[ExVatFactor] ),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		displayFolder: Calculation Roots\Sales
+		lineageTag: ec21b305-faf7-49fa-be6b-83aa1d9539a7
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Sales at the regular selling price, before discounts, without VAT, on sales-out documents. Value.
+	measure 'Sales Selling Price ex VAT' =
+			
+			CALCULATE(
+			    SUMX(
+				    FactSalesLine,
+				    FactSalesLine[Quantity] * FactSalesLine[ListPrice] * FactSalesLine[ExVatFactor]),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		displayFolder: Calculation Roots\Sales
+		lineageTag: a5b0681a-6765-417a-a279-e1eb00838d0e
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Percentage difference of gross profit ([Gross Profit]): this year to date against the prior year (the date slicers' window one year back), (actual - other) / other. Shown with an arrow, ▲ above and ▼ below.
+	measure 'Index Gross Profit Actual/Prior' =
+			
+			IndexDif([Gross Profit Actual Year], [Gross Profit Prior Year])
+		displayFolder: Margin\Profit
+		lineageTag: 594cf09b-d01f-4145-97cc-b5f14c20a5ff
+
+		formatStringDefinition = IndexFormat(SELECTEDMEASURE(), 0)
+
+		annotation RagColor = UpIsGood
+
+	/// Net sales without VAT ([Sales Net Price ex VAT]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Sales Net Price ex VAT Actual Year' =
+			
+			YearToDay( [Sales Net Price ex VAT] )
+		displayFolder: Sales\Net Price ex VAT
+		lineageTag: 4bb7595b-dddf-4eb1-ad52-bee4a3fc8ce2
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Net sales without VAT ([Sales Net Price ex VAT]), in the prior year: the date slicers' window one year back, inside last calendar year. Value.
+	measure 'Sales Net Price ex VAT Prior Year' =
+			
+			PrevYear( [Sales Net Price ex VAT] )
+		displayFolder: Sales\Net Price ex VAT
+		lineageTag: e5215085-c735-448d-a5b9-3952c92787ec
+
+		formatStringDefinition = NumberFormat(SELECTEDMEASURE(), FALSE)
+
+	/// Percentage difference of net sales without VAT ([Sales Net Price ex VAT]): this year to date against the prior year (the date slicers' window one year back), (actual - other) / other. Shown with an arrow, ▲ above and ▼ below.
+	measure 'Index Sales Net Price ex VAT Actual/Prior' =
+			
+			IndexDif([Sales Net Price ex VAT Actual Year], [Sales Net Price ex VAT Prior Year])
+		displayFolder: Sales\Net Price ex VAT
+		lineageTag: c29ac7e4-ea93-420e-a890-baa0504daa35
+
+		formatStringDefinition = IndexFormat(SELECTEDMEASURE(), 0)
+
+		annotation RagColor = UpIsGood
+
+	/// Theme colour name for [Index Sales Net Price ex VAT Actual/Prior]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Index Sales Net Price ex VAT Actual/Prior]; edit the annotation, not this measure.
+	measure 'Index Sales Net Price ex VAT Actual/Prior Color' = RagColor( [Index Sales Net Price ex VAT Actual/Prior], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 85b2ce69-43f7-4ffc-b64f-69bbe39b437c
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for [Index Gross Profit Actual/Prior]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Index Gross Profit Actual/Prior]; edit the annotation, not this measure.
+	measure 'Index Gross Profit Actual/Prior Color' = RagColor( [Index Gross Profit Actual/Prior], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: e05b850b-87b7-476b-a903-e4023660efe7
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for [Index Gross Margin Actual/Prior]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Index Gross Margin Actual/Prior]; edit the annotation, not this measure.
+	measure 'Index Gross Margin Actual/Prior Color' = RagColor( [Index Gross Margin Actual/Prior], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 5d772fa8-98c3-4036-a7c0-c13446e92409
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Distinct products the customer bought this year to date. Whole number; a Lookup view of Products Count Actual Year for the channel tooltip.
+	measure 'Customer Products Count' =
+			
+			[Products Count Actual Year]
+		displayFolder: Lookup\Customer
+		lineageTag: d6d9411d-068b-4de6-abda-a87e620f3536
+
+		formatStringDefinition =
+				VAR _unit = " ""products"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Name of the brand in context (DimBrand). Text; blank unless one brand is in context.
+	measure 'Brand Supplier Name' =
+			
+			SELECTEDVALUE( DimBrand[BrandName] )
+		displayFolder: Lookup\Brand
+		lineageTag: 9f3a37c4-a786-47b2-92d5-ab27a9acfcbd
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Outlets that sold the brand year-to-date - numeric distribution. Whole number.
+	measure 'Brand Numeric Distribution' =
+			
+			[Numeric Distribution Actual Year]
+		displayFolder: Lookup\Brand
+		lineageTag: 191d34fb-a68d-4dfd-aaf8-93eb17e7898a
+
+		formatStringDefinition =
+				VAR _unit = " ""outlets"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Growth decomposition, reach half: how much of the year-on-year sales change came from gaining or losing outlets, holding rate of sale at last year. Millions.
+	measure 'Brand Distribution Effect' =
+			
+			-- Sales = outlets x rate of sale, so the year-on-year change splits exactly
+			-- into this and Brand Sales per Outlet Effect. The two sum to the total change.
+			VAR _outlets_prior_year = [Numeric Distribution Prior Year YTD]
+			VAR _outlets_actual_year = [Numeric Distribution Actual Year]
+			VAR _ros_prior_year = DIVIDE( [Sales Net Price Prior Year YTD], _outlets_prior_year )
+			RETURN
+			    DIVIDE( ( _outlets_actual_year - _outlets_prior_year ) * _ros_prior_year, 1000000 )
+		displayFolder: Lookup\Brand
+		lineageTag: 72dd953f-5b6c-4ab1-9cee-a72622d23815
+
+		formatStringDefinition =
+				VAR _unit = """M"""
+				RETURN
+				    "+#,0.0 " & _unit & ";-#,0.0 " & _unit & ";0 " & _unit
+
+		annotation RagColor = UpIsGood
+
+	/// Growth decomposition, productivity half: how much of the year-on-year sales change came from each outlet buying more or less. Millions.
+	measure 'Brand Sales per Outlet Effect' =
+			
+			VAR _outlets_prior_year = [Numeric Distribution Prior Year YTD]
+			VAR _outlets_actual_year = [Numeric Distribution Actual Year]
+			VAR _ros_prior_year = DIVIDE( [Sales Net Price Prior Year YTD], _outlets_prior_year )
+			VAR _ros_actual_year = DIVIDE( [Sales Net Price Actual Year], _outlets_actual_year )
+			RETURN
+			    DIVIDE( _outlets_actual_year * ( _ros_actual_year - _ros_prior_year ), 1000000 )
+		displayFolder: Lookup\Brand
+		lineageTag: acf3da64-6d75-40b3-a3bd-b53e9c6d4c0e
+
+		formatStringDefinition =
+				VAR _unit = """M"""
+				RETURN
+				    "+#,0.0 " & _unit & ";-#,0.0 " & _unit & ";0 " & _unit
+
+		annotation RagColor = UpIsGood
+
+	/// Names the pattern behind the year-on-year change by the sign of the two effect measures: reach, productivity, both or neither. Text; blank until both effects resolve.
+	measure 'Brand Verdict' =
+			
+			VAR _distribution_effect = [Brand Distribution Effect]
+			VAR _ros_effect = [Brand Sales per Outlet Effect]
+			-- A zero effect takes the other effect's sign: >= 0 counted a flat reach as growth,
+			-- so a brand whose sales fell only through the rate of sale read "growth only from
+			-- distribution". Both zero is no change to explain.
+			VAR _distribution_sign = IF( _distribution_effect = 0, SIGN( _ros_effect ), SIGN( _distribution_effect ) )
+			VAR _ros_sign = IF( _ros_effect = 0, SIGN( _distribution_effect ), SIGN( _ros_effect ) )
+			RETURN
+			    -- the two effects sum to the total change, so their signs form a 2x2 that
+			    -- says which of the two forces moved the brand and in which direction
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK( _distribution_effect ) || ISBLANK( _ros_effect ), BLANK(),
+			        _distribution_sign = 0 && _ros_sign = 0, BLANK(),
+			        _distribution_sign > 0 && _ros_sign > 0, "Healthy growth",
+			        _distribution_sign > 0 && _ros_sign < 0, "Growth from distribution",
+			        _distribution_sign < 0 && _ros_sign > 0, "Lower coverage, more per outlet",
+			        "Decline in both"
+			    )
+		displayFolder: Lookup\Brand
+		lineageTag: 57fc17ab-edb3-4806-8733-b6106a98415d
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Outlets that bought this brand in both the current window and the same window a year earlier - the retained reach. Whole number; with Brand Outlets New it sums to Brand Numeric Distribution.
+	measure 'Brand Outlets Kept' =
+			
+			ChurnKept( VALUES( FactSalesLine[OutletId] ) )
+		displayFolder: Lookup\Brand
+		lineageTag: c7251835-aca9-4dad-ae4a-7c57b5990269
+
+		formatStringDefinition =
+				VAR _unit = " ""outlets"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Outlets buying this brand now that did not buy it in the same window a year earlier - the reach gained. Whole number.
+	measure 'Brand Outlets New' =
+			
+			ChurnNew( VALUES( FactSalesLine[OutletId] ) )
+		displayFolder: Lookup\Brand
+		lineageTag: 41d7a219-d7f2-4817-970f-774d3e8677c0
+
+		formatStringDefinition =
+				VAR _unit = " ""outlets"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Outlets that bought this brand a year earlier but not in the current window - the reach lost. Whole number; counted by outlet id with no minimum value, so a one-off buyer counts.
+	measure 'Brand Outlets Lost' =
+			
+			ChurnLost( VALUES( FactSalesLine[OutletId] ) )
+		displayFolder: Lookup\Brand
+		lineageTag: d4e0901a-9fed-4028-99b9-79bdd4af4d1a
+
+		formatStringDefinition =
+				VAR _unit = " ""outlets"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Products this customer bought in both the current window and the same window a year earlier. Whole number.
+	measure 'Customer Products Kept' =
+			
+			ChurnKept( VALUES( FactSalesLine[ProductId] ) )
+		displayFolder: Lookup\Customer
+		lineageTag: dbbfe6eb-427a-4c5c-a112-8012a2b780e8
+
+		formatStringDefinition =
+				VAR _unit = " ""products"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Products this customer buys now that it did not buy in the same window a year earlier - the range it has taken on. Whole number.
+	measure 'Customer Products New' =
+			
+			ChurnNew( VALUES( FactSalesLine[ProductId] ) )
+		displayFolder: Lookup\Customer
+		lineageTag: b2f4baf4-807e-498d-8dc9-f6ceb1ae79b8
+
+		formatStringDefinition =
+				VAR _unit = " ""products"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Products this customer bought a year earlier but no longer buys - the range it has dropped. Whole number; counted by product id with no minimum value.
+	measure 'Customer Products Delisted' =
+			
+			ChurnLost( VALUES( FactSalesLine[ProductId] ) )
+		displayFolder: Lookup\Customer
+		lineageTag: 2d5dfbcd-9753-4186-b675-6951d04beb49
+
+		formatStringDefinition =
+				VAR _unit = " ""products"""
+				RETURN
+				    "#,0" & _unit
+
+	/// Budget Spent year-to-date as a share of net sales year-to-date. Percentage. Both sides without VAT (spent is ex-VAT throughout). Measured against NET sales, unlike Extra Discount Rate which divides by the gross selling price, so the two are not directly comparable.
+	measure 'Marketing Budget Spent Rate' =
+			
+			DIVIDE( [Budget Spent Actual Year], [Sales Net Price ex VAT Actual Year] )
+		displayFolder: Lookup\Marketing
+		lineageTag: 302ed97b-b8aa-47bc-854d-149d57a346dc
+
+		formatStringDefinition =
+				VAR _unit = " ""of sales"""
+				RETURN
+				    "0.00%" & _unit
+
+	/// Budget Spent over Budget Accumulated, year-to-date. Percentage. Above 100% means more has been spent than accumulated - Budget Difference is the same fact in value.
+	measure 'Marketing Budget Spent Of Accumulated' =
+			
+			DIVIDE( [Budget Spent Actual Year], [Budget Accumulated Actual Year] )
+		displayFolder: Lookup\Marketing
+		lineageTag: 3398b2f3-dc60-4736-8afb-f1653a10f348
+
+		formatStringDefinition =
+				VAR _unit = " ""of accumulated"""
+				RETURN
+				    "0.0%" & _unit
+
+	/// Price/volume bridge, volume half: how much of the year-on-year sales change came from selling more or fewer units, holding price at last year. Millions.
+	measure 'Marketing Quantity Effect' =
+			
+			-- Sales = quantity x price, so the change splits exactly into this and
+			-- Marketing Price Effect. Each factor is held at the OPPOSITE period from the one
+			-- that moves, or a residual appears that belongs to neither measure.
+			VAR _quantity_prior_year = [Sales Quantity Prior Year YTD]
+			VAR _quantity_actual_year = [Sales Quantity Actual Year]
+			VAR _price_prior_year = DIVIDE( [Sales Net Price Prior Year YTD], _quantity_prior_year )
+			RETURN
+			    DIVIDE( ( _quantity_actual_year - _quantity_prior_year ) * _price_prior_year, 1000000 )
+		displayFolder: Lookup\Marketing
+		lineageTag: 996006fe-c1c2-4a29-a428-03f533e3a0cc
+
+		formatStringDefinition =
+				VAR _unit = """M"""
+				RETURN
+				    "+#,0.0 " & _unit & ";-#,0.0 " & _unit & ";0 " & _unit
+
+		annotation RagColor = UpIsGood
+
+	/// Price/volume bridge, price half: how much of the year-on-year sales change came from a higher or lower average price, valued at this year quantity. Millions.
+	measure 'Marketing Price Effect' =
+			
+			VAR _quantity_prior_year = [Sales Quantity Prior Year YTD]
+			VAR _quantity_actual_year = [Sales Quantity Actual Year]
+			VAR _price_prior_year = DIVIDE( [Sales Net Price Prior Year YTD], _quantity_prior_year )
+			VAR _price_actual_year = DIVIDE( [Sales Net Price Actual Year], _quantity_actual_year )
+			RETURN
+			    DIVIDE( _quantity_actual_year * ( _price_actual_year - _price_prior_year ), 1000000 )
+		displayFolder: Lookup\Marketing
+		lineageTag: b3be267e-026d-4ebc-86cb-7276764b591e
+
+		formatStringDefinition =
+				VAR _unit = """M"""
+				RETURN
+				    "+#,0.0 " & _unit & ";-#,0.0 " & _unit & ";0 " & _unit
+
+		annotation RagColor = UpIsGood
+
+	/// Names the pattern behind the year-on-year change by the sign of the price and volume effects. Text; blank until both effects resolve.
+	measure 'Marketing Verdict' =
+			
+			VAR _price = [Marketing Price Effect]
+			VAR _quantity = [Marketing Quantity Effect]
+			-- A zero effect takes the other effect's sign, as in Brand Verdict: >= 0 counted an
+			-- unchanged price or volume as growth. Both zero is no change to explain.
+			VAR _price_sign = IF( _price = 0, SIGN( _quantity ), SIGN( _price ) )
+			VAR _quantity_sign = IF( _quantity = 0, SIGN( _price ), SIGN( _quantity ) )
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK( _price ) || ISBLANK( _quantity ), BLANK(),
+			        _price_sign = 0 && _quantity_sign = 0, BLANK(),
+			        _price_sign > 0 && _quantity_sign > 0, "Growth from price and volume",
+			        _price_sign > 0 && _quantity_sign < 0, "Growth from price only",
+			        _price_sign < 0 && _quantity_sign > 0, "Higher volume, lower price",
+			        "Decline in both"
+			    )
+		displayFolder: Lookup\Marketing
+		lineageTag: 7633c302-24da-4368-ae1b-4c6044491219
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Net sales year-to-date. Value; a Lookup view of Sales Net Price Actual Year for the marketing tooltip.
+	measure 'Marketing Product Sales' =
+			
+			[Sales Net Price Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: c8fe2494-006d-4cc3-aae7-60fd12bb6943
+
+		formatStringDefinition =
+				"#,0"
+
+	/// Gross margin year-to-date: profit over net sales without VAT, goods only. Percentage; a Lookup view of Gross Margin Actual Year for the marketing tooltip.
+	measure 'Marketing Product Gross Margin' =
+			
+			[Gross Margin Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: 5790ea86-0ecd-4904-9b96-0a8b4d4ad22a
+
+		formatStringDefinition =
+				VAR _unit = " ""of sales"""
+				RETURN
+				    "0.0%" & _unit
+
+	/// Gross profit year-to-date: net price without VAT less cost, goods only. Value; a Lookup view of Gross Profit Actual Year for the marketing tooltip.
+	measure 'Marketing Product Gross Profit' =
+			
+			[Gross Profit Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: 0a9e6ee7-4378-4bf3-a58b-677d7f9255ce
+
+		formatStringDefinition =
+				"#,0"
+
+	/// Budget spent year-to-date: extra discounts, credit notes issued and marketing invoices. Value; a Lookup view of Budget Spent Actual Year for the marketing tooltip.
+	measure 'Budget Spent | Tooltip' =
+			
+			[Budget Spent Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: 152d205c-3442-49bd-9f06-fbfe5ca4dd42
+
+		formatStringDefinition =
+				"#,0"
+
+	/// Budget accumulated year-to-date: the marketing budget from the price calculation plus credit notes received; negative where the margin does not cover the four rates. Value; a Lookup view of Budget Accumulated Actual Year for the marketing tooltip.
+	measure 'Budget Accumulated | Tooltip' =
+			
+			[Budget Accumulated Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: 8525137c-b9f8-4897-a7ba-e036297bbe06
+
+		formatStringDefinition =
+				"#,0"
+
+	/// Budget accumulated less budget spent, year-to-date; negative is overspent. Value; a Lookup view of Budget Difference Actual Year for the marketing tooltip.
+	measure 'Budget Difference | Tooltip' =
+			
+			[Budget Difference Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: be349dd2-91d1-4194-bbb4-39d3d39d9447
+
+		formatString: +#,0;-#,0;#,0
+
+		annotation RagColor = UpIsGood
+
+	/// Extra discount given year-to-date. Value; a Lookup view of Extra Discount Actual Year for the marketing tooltip.
+	measure 'Extra Discount | Tooltip' =
+			
+			[Extra Discount Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: 508add51-8254-4d8b-be0c-d6e97e90f624
+
+		formatStringDefinition =
+				"#,0"
+
+	/// Extra discount as a share of sales at the gross selling price, year-to-date. Percentage; a Lookup view of Extra Discount Rate Actual Year for the marketing tooltip.
+	measure 'Extra Discount Rate | Tooltip' =
+			
+			[Extra Discount Rate Actual Year]
+		displayFolder: Lookup\Marketing
+		lineageTag: 21da46ef-d8bc-4a92-a8d9-283da564c96d
+
+		formatStringDefinition =
+				VAR _unit = " ""of gross sales"""
+				RETURN
+				    "0.00%" & _unit
+
+	/// Theme colour name for [Brand Distribution Effect]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Brand Distribution Effect]; edit the annotation, not this measure.
+	measure 'Brand Distribution Effect Color' = RagColor( [Brand Distribution Effect], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 1b365186-4fd0-480d-953b-ac79a8c96e7b
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for [Brand Sales per Outlet Effect]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Brand Sales per Outlet Effect]; edit the annotation, not this measure.
+	measure 'Brand Sales per Outlet Effect Color' = RagColor( [Brand Sales per Outlet Effect], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 6a4df210-41f4-42c0-92e6-5534670744fa
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for the Brand Verdict: good when both effects add sales, bad when both cost sales, neutral for a mixed verdict.
+	measure 'Brand Verdict Color' =
+			VAR _first_effect = [Brand Distribution Effect]
+			VAR _second_effect = [Brand Sales per Outlet Effect]
+			-- same signs as the verdict text, a zero effect taking the other's sign, so colour
+			-- and wording always agree: both up is good, both down is bad, a mixed verdict is neither
+			VAR _first_sign = IF( _first_effect = 0, SIGN( _second_effect ), SIGN( _first_effect ) )
+			VAR _second_sign = IF( _second_effect = 0, SIGN( _first_effect ), SIGN( _second_effect ) )
+			RETURN
+			    IF(
+			        NOT ( ISBLANK( _first_effect ) || ISBLANK( _second_effect ) || ( _first_sign = 0 && _second_sign = 0 ) ),
+			        RagColor( _first_sign + _second_sign, 0 )
+			    )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 47cb9867-3556-409a-845f-435086b10684
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for [Budget Difference | Tooltip]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Budget Difference | Tooltip]; edit the annotation, not this measure.
+	measure 'Budget Difference Color | Tooltip' = RagColor( [Budget Difference | Tooltip], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: aedc1948-5b04-4258-9467-9efb1d350112
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for [Marketing Quantity Effect]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Marketing Quantity Effect]; edit the annotation, not this measure.
+	measure 'Marketing Quantity Effect Color' = RagColor( [Marketing Quantity Effect], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 782897b6-391d-4ea3-ae45-4d3c400b271f
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for [Marketing Price Effect]: good when it rises, neutral at 0, blank when it is blank. Generated by scripts/rag_colors.py from the RagColor annotation on [Marketing Price Effect]; edit the annotation, not this measure.
+	measure 'Marketing Price Effect Color' = RagColor( [Marketing Price Effect], 0 )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: ef12f674-b122-4eeb-a2bf-373b8b07f752
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// Theme colour name for the marketing verdict: good when price and volume both add sales, bad when both cost sales, neutral for a mixed verdict.
+	measure 'Marketing Verdict Color' =
+			VAR _first_effect = [Marketing Price Effect]
+			VAR _second_effect = [Marketing Quantity Effect]
+			-- same signs as the verdict text, a zero effect taking the other's sign, so colour
+			-- and wording always agree: both up is good, both down is bad, a mixed verdict is neither
+			VAR _first_sign = IF( _first_effect = 0, SIGN( _second_effect ), SIGN( _first_effect ) )
+			VAR _second_sign = IF( _second_effect = 0, SIGN( _first_effect ), SIGN( _second_effect ) )
+			RETURN
+			    IF(
+			        NOT ( ISBLANK( _first_effect ) || ISBLANK( _second_effect ) || ( _first_sign = 0 && _second_sign = 0 ) ),
+			        RagColor( _first_sign + _second_sign, 0 )
+			    )
+		isHidden
+		displayFolder: Formatting\RAG Color
+		lineageTag: 247ef5cd-ac77-4c6f-bc46-7f4f2415b2dd
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	/// The extra discount without VAT: quantity x (price after the regular discount - net price), with the VAT on the line taken out. The Budget Spent family's discount part, on the same basis as the other spend, which is all without VAT. Value.
+	measure 'Extra Discount Without VAT' =
+			CALCULATE(
+			    SUMX(
+			        FactSalesLine,
+			        FactSalesLine[Quantity]
+			            * ( FactSalesLine[GrossPrice] - FactSalesLine[NetPrice] )
+			            * FactSalesLine[ExVatFactor]
+			    ),
+			    DimDocumentType[IsSalesOut] = TRUE
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: d5801bd3-d504-48e0-a9e1-1ed59b51d270
+
+	/// Service and rent invoices to suppliers, without VAT, booked to the supplier's brand (FactServiceInvoice): added to the marketing budget (Budget Accumulated). Value.
+	measure 'Service Invoices' = SUM( FactServiceInvoice[Value] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 32d0b6d5-3726-446c-9dcb-cfb71692282c
+
+	/// Service invoices to suppliers ([Service Invoices]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Service Invoices Actual Year' = YearToDay( [Service Invoices] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 2a5b4537-483e-4aaf-835e-cdc85238951d
+
+	/// Campaigns agreed with customers in the trade-terms register (fixed value): each amount as agreed, dated at the campaign's start. Without VAT. Value.
+	measure Campaigns =
+			CALCULATE(
+			    SUM( FactTradeTerm[Spent] ),
+			    FactTradeTerm[TermGroup] = "Campaign",
+			    FactTradeTerm[IsPercentage] = FALSE
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 181b8831-be57-456b-85b7-c53343f3c841
+
+	/// Promotions agreed with customers in the trade-terms register (fixed value): each amount as agreed, dated at its start. Without VAT. Value.
+	measure Promotions =
+			CALCULATE(
+			    SUM( FactTradeTerm[Spent] ),
+			    FactTradeTerm[TermGroup] = "Promotion",
+			    FactTradeTerm[IsPercentage] = FALSE
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: ebdf98e7-2d78-497b-bba0-504ed8a75421
+
+	/// Seasonal fixed positions: the fixed-value positions (and marketing terms) that do not run a whole calendar year, value x units in each month they have run up to today, each month its own (FactTradeTermMonth). Without VAT. Value.
+	measure 'Seasonal Fixed Positions' =
+			CALCULATE(
+			    SUM( FactTradeTermMonth[Spent] ),
+			    FactTradeTermMonth[TermGroup] = "Position",
+			    FactTradeTermMonth[IsPercentage] = FALSE,
+			    FactTradeTermMonth[IsFullYear] = FALSE,
+			    -- the months run up to today: the months still to come are a commitment, not spent
+			    KEEPFILTERS( DimDate[Date] <= TODAY() )
+			)
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 2406e524-de9a-4ba3-a952-996dfc3f88aa
+
+	/// The trade terms the business counts as trade spend: campaigns, promotions and seasonal fixed positions. Without VAT. Value.
+	measure 'Trade Terms Spent' = [Campaigns] + [Promotions] + [Seasonal Fixed Positions]
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: f303e735-bff7-44dc-96b6-553cf4630ed0
+
+	/// Trade terms spent ([Trade Terms Spent]), this year to date: the date slicers' window within this year, cut at today (1 January to today when no slicer is set). Value.
+	measure 'Trade Terms Spent Actual Year' = YearToDay( [Trade Terms Spent] )
+		formatString: #,0
+		displayFolder: Trade Marketing\Trade Spend
+		lineageTag: 7e8901f1-c4e3-40b8-8775-88c76be057e9
+
+	/// 1 where the item in context has sales in the selected dates, blank otherwise. The hidden filter of the product and organisation slicers, so they list only items with data. A flag.
+	measure 'Slicer Has Data' = IF( NOT ISBLANK( [Sales Net Price] ), 1 )
+		formatString: 0
+		isHidden
+		displayFolder: Formatting\Slicer Filter
+		lineageTag: cc1ad80f-431a-4165-99db-228df5042548
+
+	partition Measure = m
+		mode: import
+		queryGroup: Model
+		source =
+				let
+				    // Query group: Model
+				    // Measure-table scaffold: an empty table that hosts measures only.
+				    Source = #table({}, {})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,252 @@
+cultureInfo en-US
+	translations
+		model Model
+			table DimDate
+				column Date
+					caption: Date
+				column Day
+					caption: Day
+				column 'Day Initial'
+					caption: Day Initial
+				column 'Day Week'
+					caption: Weekday No
+				column 'Day Year'
+					caption: Day of Year
+				column DayMonth
+					caption: Date
+				column Month
+					caption: Month
+				column 'Month Name'
+					caption: Month
+				column 'Month Working Day'
+					caption: Day
+				column 'Month Year'
+					caption: Month/Year
+				column Quarter
+					caption: Quarter
+				column Week
+					caption: Week
+				column 'Week Month'
+					caption: Week of Month
+				column 'Week Name'
+					caption: Week (Text)
+				column 'Working Days'
+					caption: Working Days
+				column Year
+					caption: Year
+			table DimBrand
+				column BrandName
+					caption: Brand
+				column DivisionName
+					caption: Division
+			table DimDocumentType
+				column DocumentTypeName
+					caption: Document Type
+				column IsSalesOut
+					caption: Sales Out
+			table DimOrgUnit
+				column OrgUnitName
+					caption: Unit
+			table DimOutlet
+				column Channel
+					caption: Channel
+				column City
+					caption: City
+				column OutletLabel
+					caption: Customer - Outlet
+				column OutletName
+					caption: Outlet
+				column Region
+					caption: Region
+			table DimPartner
+				column PartnerName
+					caption: Customer
+			table DimProduct
+				column ProductId
+					caption: Code
+				column ProductName
+					caption: Product
+			table FactCreditNote
+				column Date
+					caption: Date
+				column Direction
+					caption: Direction
+			table FactSalesLine
+				column Date
+					caption: Date
+			table FactServiceInvoice
+				column Date
+					caption: Date
+			table FactTradeTerm
+				column EndDate
+					caption: End
+				column StartDate
+					caption: Start
+				column TermGroup
+					caption: Term Group
+				column TermType
+					caption: Position Type
+			table FactTradeTermMonth
+				column Month
+					caption: Month
+				column TermGroup
+					caption: Term Group
+			table Measure
+				measure 'Brand Distribution Effect'
+					caption: Distribution Effect
+				measure 'Brand Numeric Distribution'
+					caption: Numeric Distribution
+				measure 'Brand Outlets Kept'
+					caption: Outlets Retained
+				measure 'Brand Outlets Lost'
+					caption: Outlets Lost
+				measure 'Brand Outlets New'
+					caption: Outlets Gained
+				measure 'Brand Sales per Outlet Effect'
+					caption: Rate-of-Sale Effect
+				measure 'Brand Supplier Name'
+					caption: Brand
+				measure 'Brand Verdict'
+					caption: Assessment
+				measure 'Budget Accumulated Actual Year'
+					caption: Total Accumulated
+				measure 'Budget Accumulated | Tooltip'
+					caption: Accumulated
+				measure 'Budget Difference Actual Year'
+					caption: Difference
+				measure 'Budget Difference | Tooltip'
+					caption: Difference
+				measure 'Budget Spent Actual Year'
+					caption: Spent
+				measure 'Budget Spent | Tooltip'
+					caption: Spent
+				measure Campaigns
+					caption: Campaigns
+				measure 'Credit Notes Issued'
+					caption: Issued Credit Notes
+				measure 'Credit Notes Issued Actual Year'
+					caption: Credit Notes Issued
+				measure 'Credit Notes Received'
+					caption: Credit Notes Received
+				measure 'Credit Notes Received Actual Year'
+					caption: Credit Notes Received
+				measure 'Customer Products Count'
+					caption: Products
+				measure 'Customer Products Delisted'
+					caption: Products Delisted
+				measure 'Customer Products Kept'
+					caption: Products Retained
+				measure 'Customer Products New'
+					caption: Products Added
+				measure 'Extra Discount'
+					caption: Extra Discount
+				measure 'Extra Discount Actual Year'
+					caption: Extra Discount Current Year
+				measure 'Extra Discount Prior Year'
+					caption: Prior Year
+				measure 'Extra Discount Rate Actual Year'
+					caption: Extra Discount %
+				measure 'Extra Discount Rate | Tooltip'
+					caption: Extra Discount %
+				measure 'Extra Discount Without VAT'
+					caption: Extra Discount ex VAT
+				measure 'Extra Discount | Tooltip'
+					caption: Extra Discount
+				measure 'Gross Margin'
+					caption: Margin
+				measure 'Gross Margin Actual Year'
+					caption: Margin Current Year
+				measure 'Gross Margin Prior Year'
+					caption: Margin Prior Year
+				measure 'Gross Margin at Regular Price Actual Year'
+					caption: Plan Margin
+				measure 'Gross Profit'
+					caption: Profit
+				measure 'Gross Profit Actual Year'
+					caption: Profit Current Year
+				measure 'Gross Profit Prior Year'
+					caption: Profit Prior Year
+				measure 'Gross Profit at Regular Price'
+					caption: Plan Gross Profit
+				measure 'Gross Profit at Regular Price Actual Year'
+					caption: Plan Profit
+				measure 'Index Gross Margin Actual/Prior'
+					caption: Margin Ind Prior Year
+				measure 'Index Gross Profit Actual/Prior'
+					caption: Profit Ind Prior Year
+				measure 'Index Sales Net Price ex VAT Actual/Prior'
+					caption: Sales ex VAT Ind Prior Year
+				measure 'Marketing Accumulated'
+					caption: Marketing Accumulated
+				measure 'Marketing Accumulated Actual Year'
+					caption: Marketing Accumulated
+				measure 'Marketing Budget Spent Of Accumulated'
+					caption: Spent of Accumulated
+				measure 'Marketing Budget Spent Rate'
+					caption: Spent %
+				measure 'Marketing Price Effect'
+					caption: Price Effect
+				measure 'Marketing Product Gross Margin'
+					caption: Gross Margin
+				measure 'Marketing Product Gross Profit'
+					caption: Gross Profit
+				measure 'Marketing Product Sales'
+					caption: Net Sales
+				measure 'Marketing Quantity Effect'
+					caption: Volume Effect
+				measure 'Marketing Verdict'
+					caption: Verdict
+				measure 'Numeric Distribution'
+					caption: Outlets
+				measure 'Numeric Distribution Actual Year'
+					caption: Outlets Current Year
+				measure 'Numeric Distribution Prior Year'
+					caption: Prior Year
+				measure 'Numeric Distribution Prior Year YTD'
+					caption: Prior Year TD
+				measure 'Products Count'
+					caption: Products
+				measure 'Products Count Actual Year'
+					caption: Products Current Year
+				measure Promotions
+					caption: Promotions
+				measure 'Sales Cost Price'
+					caption: Cost of Sales
+				measure 'Sales Net Price'
+					caption: Sales
+				measure 'Sales Net Price Actual Year'
+					caption: Sales Current Year
+				measure 'Sales Net Price Prior Year'
+					caption: Prior Year
+				measure 'Sales Net Price Prior Year YTD'
+					caption: Prior Year TD
+				measure 'Sales Net Price ex VAT'
+					caption: Sales ex VAT
+				measure 'Sales Net Price ex VAT Actual Year'
+					caption: Sales ex VAT Current Year
+				measure 'Sales Net Price ex VAT Prior Year'
+					caption: Sales ex VAT Prior Year
+				measure 'Sales Quantity'
+					caption: Quantity
+				measure 'Sales Quantity Actual Year'
+					caption: Current Year
+				measure 'Sales Quantity Prior Year'
+					caption: Prior Year
+				measure 'Sales Quantity Prior Year YTD'
+					caption: Prior Year TD
+				measure 'Sales Selling Price'
+					caption: Sales at Selling Price
+				measure 'Sales Selling Price Actual Year'
+					caption: Current Year
+				measure 'Sales Selling Price ex VAT'
+					caption: Sales at Selling Price ex VAT
+				measure 'Seasonal Fixed Positions'
+					caption: Seasonal Fixed Positions
+				measure 'Service Invoices'
+					caption: Service Invoices
+				measure 'Service Invoices Actual Year'
+					caption: Service Invoices Current Year
+				measure 'Trade Terms Spent'
+					caption: Trade Terms
+				measure 'Trade Terms Spent Actual Year'
+					caption: Trade Terms Current Year

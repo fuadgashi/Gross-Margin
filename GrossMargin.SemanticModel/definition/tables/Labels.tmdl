@@ -1,0 +1,124 @@
+/// Every user-facing string of the report: one row per owner, label type and culture. Plain data; the label measures read it.
+table Labels
+	lineageTag: f7947e31-563b-4055-a652-93ace8292257
+
+	/// What the label belongs to - a page, a section, a visual or a slicer.
+	column OwnerType
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: b94695e2-4ba1-4fb9-b569-7e0cde19e77d
+		summarizeBy: none
+		sourceColumn: OwnerType
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sequential number within the owner type. Never shared across types.
+	column OwnerNumber
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 17f75ace-4815-4bb8-b1b1-792a33604c68
+		summarizeBy: none
+		sourceColumn: OwnerNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Human-readable name of the thing the label belongs to.
+	column OwnerName
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 228623ce-03e8-4a9b-8df0-8f428648c0ab
+		summarizeBy: none
+		sourceColumn: OwnerName
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Which slot on the owner this text fills, such as a title or a subtitle.
+	column LabelType
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: e838ff26-8d2d-4d62-ac51-4df830b524b8
+		summarizeBy: none
+		sourceColumn: LabelType
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Language this row's text is written in.
+	column Culture
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 4b249499-bd89-4d80-9f55-cd617ff07971
+		summarizeBy: none
+		sourceColumn: Culture
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The text shown to the user. All report text lives here, never in DAX.
+	column Label
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 0a04ea26-45a6-4131-9007-314768b13b2f
+		summarizeBy: none
+		sourceColumn: Label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Labels = m
+		mode: import
+		queryGroup: Model
+		source =
+				let
+				    // Every user-facing string of the report, one row per OwnerType + OwnerNumber + LabelType + Culture.
+				    // Text lives here, never in DAX: the measures in LabelMeasures are lookups against it.
+				    Source = #table(
+				        type table [OwnerType = text, OwnerNumber = Int64.Type, OwnerName = text, Culture = text, LabelType = text, Label = text],
+				        {
+				        {"Page", 1, "PageNav1", "en-US", "Navigator Title", "Brand"},
+				        {"Page", 1, "Page 1", "en-US", "Subtitle", "Gross profit and margin by brand and product"},
+				        {"Page", 1, "Page 1", "en-US", "Title", "Profit by Brand"},
+				        {"Page", 2, "PageNav2", "en-US", "Navigator Title", "Channel"},
+				        {"Page", 2, "Page 2", "en-US", "Subtitle", "Gross profit and margin by channel, region and city"},
+				        {"Page", 2, "Page 2", "en-US", "Title", "Profit by Channel"},
+				        {"Slicer", 3, "Channel/Region", "en-US", "SlicerTitle", "Channel / Region"},
+				        {"Slicer", 4, "Customer/Outlet", "en-US", "SlicerTitle", "Customer / Outlet"},
+				        {"Slicer", 5, "Date", "en-US", "SlicerTitle", "Date Range"},
+				        {"Slicer", 6, "Division/Product", "en-US", "SlicerTitle", "Division / Product"},
+				        {"Slicer", 7, "Unit/Warehouse", "en-US", "SlicerTitle", "Unit / Warehouse"},
+				        {"Visual", 8, "Alt Brand Tooltip", "en-US", "VisualSubtitle", "Table for the brand or product under the pointer: sales, margin, budget spent and accumulated, extra discount, and the price and volume effects."},
+				        {"Visual", 9, "Alt Channel Tooltip", "en-US", "VisualSubtitle", "Table for the channel, region or city under the pointer: products kept, new and dropped, outlets kept, new and lost, and the distribution and sales-per-outlet effects."},
+				        {"Visual", 10, "Alt Channel Extra Discount", "en-US", "VisualSubtitle", "Column and line chart: extra discount in the Current Year and the Prior Year, against marketing accumulated."},
+				        {"Visual", 11, "Alt Channel Gross Margin", "en-US", "VisualSubtitle", "Column and line chart: gross margin in the Current Year, the Prior Year and at the regular price."},
+				        {"Visual", 12, "Alt Channel Gross Profit", "en-US", "VisualSubtitle", "Column and line chart: gross profit in the Current Year, the Prior Year and at the regular price."},
+				        {"Visual", 13, "Alt Channel Margin by Week", "en-US", "VisualSubtitle", "Area chart: gross margin by week: Current Year, Prior Year and at the regular price."},
+				        {"Visual", 14, "Alt Channel Table", "en-US", "VisualSubtitle", "Table by channel, region and city: sales without VAT, gross profit and gross margin, Current Year against Prior Year, with the changes."},
+				        {"Visual", 15, "Alt Brand Extra Discount", "en-US", "VisualSubtitle", "Column and line chart: extra discount in the Current Year and the Prior Year, against marketing accumulated."},
+				        {"Visual", 16, "Alt Brand Gross Margin", "en-US", "VisualSubtitle", "Column and line chart: gross margin in the Current Year, the Prior Year and at the regular price."},
+				        {"Visual", 17, "Alt Brand Gross Profit", "en-US", "VisualSubtitle", "Column and line chart: gross profit in the Current Year, the Prior Year and at the regular price."},
+				        {"Visual", 18, "Alt Brand Margin by Week", "en-US", "VisualSubtitle", "Area chart: gross margin by week: Current Year, Prior Year and at the regular price."},
+				        {"Visual", 19, "Alt Brand Table", "en-US", "VisualSubtitle", "Table by brand and product: sales without VAT, gross profit and gross margin, Current Year against Prior Year, with the changes."},
+				        {"Visual", 20, "Extra Discount", "en-US", "VisualTitle", "Extra Discount"},
+				        {"Visual", 21, "Gross Margin Chart", "en-US", "VisualTitle", "Gross Margin"},
+				        {"Visual", 22, "Gross Profit", "en-US", "VisualTitle", "Gross Profit"},
+				        {"Visual", 23, "Profit Table", "en-US", "VisualSubtitle", "Current Year against Prior Year"},
+				        {"Visual", 24, "Selling Value", "en-US", "MeasureLabel", "Sales Value"},
+				        {"Visual", 25, "Week Years", "en-US", "VisualSubtitle", "In weeks, by years"},
+				        {"Visual", 26, "Years", "en-US", "VisualSubtitle", "By years"}
+				        }
+				    ),
+				    // The refresh fails on a duplicate key; wrong text under a valid key is for review to catch.
+				    Guard =
+				        if Table.RowCount(Table.Distinct(Source, {"OwnerType", "OwnerNumber", "LabelType", "Culture"})) = Table.RowCount(Source)
+				        then Source
+				        else error "Labels: duplicate OwnerType + OwnerNumber + LabelType + Culture"
+				in
+				    Guard
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

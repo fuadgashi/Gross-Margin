@@ -1,0 +1,75 @@
+relationship f818f859-a350-4e70-84de-dc31836f0d46
+	fromColumn: FactSalesLine.Date
+	toColumn: DimDate.Date
+
+relationship 2dcc7c36-e065-432b-83ea-31aabe1ada4e
+	fromColumn: FactSalesLine.DocumentTypeId
+	toColumn: DimDocumentType.DocumentTypeId
+
+relationship 7fabde2a-2034-4300-b6ef-fcf6584292fa
+	fromColumn: FactSalesLine.OrgUnitId
+	toColumn: DimOrgUnit.OrgUnitId
+
+relationship b4daf296-2200-481e-b6c5-898b72640298
+	fromColumn: FactSalesLine.OutletId
+	toColumn: DimOutlet.OutletId
+
+relationship 63c093a6-4e9a-4955-99f1-0f1f10d26933
+	fromColumn: FactSalesLine.ProductId
+	toColumn: DimProduct.ProductId
+
+relationship 5de5b9aa-b839-4842-b4f8-0eb547102673
+	fromColumn: FactTradeTerm.OutletId
+	toColumn: DimOutlet.OutletId
+
+relationship 63adb814-2eb9-427f-85c1-da4ea04380c6
+	fromColumn: FactTradeTerm.BrandId
+	toColumn: DimBrand.BrandId
+
+relationship 6ca993c9-3093-4324-9f15-7357a34960fd
+	fromColumn: FactTradeTerm.StartDate
+	toColumn: DimDate.Date
+
+relationship cd783ce9-6c22-4148-ae21-aab0b9caada9
+	fromColumn: FactTradeTermMonth.OutletId
+	toColumn: DimOutlet.OutletId
+
+relationship 1c45efaa-edf3-4fb2-806e-61cd8d592317
+	fromColumn: FactTradeTermMonth.BrandId
+	toColumn: DimBrand.BrandId
+
+relationship dd605416-d775-4f15-ba88-0a6b1ec353dc
+	fromColumn: FactTradeTermMonth.Month
+	toColumn: DimDate.Date
+
+relationship 7491062d-801f-4334-825e-66536bf6f948
+	fromColumn: FactCreditNote.Date
+	toColumn: DimDate.Date
+
+relationship 0cfb257a-2286-4012-8c2b-dd9a4240c61c
+	fromColumn: FactCreditNote.PartnerId
+	toColumn: DimPartner.PartnerId
+
+relationship b0b6e60f-a639-4abe-9bf2-46be9a4aabd0
+	fromColumn: FactCreditNote.BrandId
+	toColumn: DimBrand.BrandId
+
+relationship 3711ae95-2e55-447b-832d-24dfb8198e6d
+	fromColumn: FactServiceInvoice.Date
+	toColumn: DimDate.Date
+
+relationship c4dd5ee7-0411-409a-be31-feca8b03643b
+	fromColumn: FactServiceInvoice.PartnerId
+	toColumn: DimPartner.PartnerId
+
+relationship 50d75cd7-6c61-4f55-bbe4-8906c0a2e116
+	fromColumn: FactServiceInvoice.BrandId
+	toColumn: DimBrand.BrandId
+
+relationship 86f0c2a4-de4c-4633-bff3-35295e0f2720
+	fromColumn: DimProduct.BrandId
+	toColumn: DimBrand.BrandId
+
+relationship c90d93fd-9382-4230-8d2d-ce91400ce4b3
+	fromColumn: DimOutlet.PartnerId
+	toColumn: DimPartner.PartnerId

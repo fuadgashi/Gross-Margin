@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "1db6b00769f822137882",
+  "displayName": "Brand",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "56a68a6516c1672fc6c8",
+      "target": "3fec9b3b60870ad39f5b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "56a68a6516c1672fc6c8",
+      "target": "3ab9812c2e7368d09dfc",
+      "type": "DataFilter"
+    },
+    {
+      "source": "56a68a6516c1672fc6c8",
+      "target": "943468e719dae01a4734",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1823e26689bd4b82a034",
+      "target": "3ab9812c2e7368d09dfc",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1823e26689bd4b82a034",
+      "target": "943468e719dae01a4734",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1823e26689bd4b82a034",
+      "target": "3fec9b3b60870ad39f5b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1823e26689bd4b82a034",
+      "target": "56a68a6516c1672fc6c8",
+      "type": "DataFilter"
+    }
+  ]
+}

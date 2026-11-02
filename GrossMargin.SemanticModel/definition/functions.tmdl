@@ -1,0 +1,199 @@
+/// Year-to-date up to today: evaluates the measure for the date slicers' window within the current calendar year, cut at today (1 January to today when no slicer is set). KEEPFILTERS keeps the slicers' selection instead of replacing it.
+function YearToDay =
+		(cal_funct: anyref expr) =>
+				CALCULATE(
+					cal_funct,
+					KEEPFILTERS(DimDate[Year] = YEAR(TODAY())),
+					KEEPFILTERS(DimDate[Date] <= TODAY())
+				)
+	lineageTag: bbb419b1-cb75-4406-95a0-ce19cad053a1
+
+/// Prior year: shifts the measure back one year using DATEADD and restricts to the prior calendar year. Used for year-over-year comparisons.
+function PrevYear =
+		(cal_funct: anyref expr) =>
+				CALCULATE(
+					cal_funct,
+					DATEADD(
+						DimDate[Date],
+						-1,
+						YEAR
+					),
+					DimDate[Year] = YEAR(TODAY()) - 1
+				)
+	lineageTag: c681a649-de59-47fc-98d4-6eb1d1a76cad
+
+/// Year-to-date up to today, for a TABLE expression - the table-valued mirror of YearToDay. Identical filters; CALCULATETABLE instead of CALCULATE, because YearToDay returns a scalar and a table cannot pass through it. KEEPFILTERS keeps the date slicers' selection instead of replacing it, so the window follows the slicers.
+function YearToDaySet =
+		(entity_set: anyref expr) =>
+				CALCULATETABLE(
+					entity_set,
+					KEEPFILTERS(DimDate[Year] = YEAR(TODAY())),
+					KEEPFILTERS(DimDate[Date] <= TODAY())
+				)
+	lineageTag: a51231e6-d271-4506-8966-1c59d33548c9
+
+/// Prior year, for a TABLE expression - the table-valued mirror of PrevYear, with the same DATEADD shift and year filter. Wrap it in YearToDaySet to get the aligned prior window, exactly as Products Count Prior Year YTD wraps PrevYear in YearToDay.
+function PrevYearSet =
+		(entity_set: anyref expr) =>
+				CALCULATETABLE(
+					entity_set,
+					DATEADD(DimDate[Date], -1, YEAR),
+					DimDate[Year] = YEAR(TODAY()) - 1
+				)
+	lineageTag: bcf6b421-0eb0-49f9-9458-0981076211a4
+
+/// The entity set restricted to countable sales-out rows - the same sales-out filter every sales measure applies (lines outside the sales rule never load: the FactSalesLine query leaves them out). Pass a table expression built off the fact (VALUES( FactSalesLine[...] ) or SUMMARIZE( FactSalesLine, ... )): a one-side VALUES() ignores the fact-side filter and returns every row in the dimension.
+function SalesOutSet =
+		(entity_set: anyref expr) =>
+				CALCULATETABLE(
+					entity_set,
+					DimDocumentType[IsSalesOut] = TRUE
+				)
+	lineageTag: 7bb8d00a-264a-4fc4-812a-b66048de7a19
+
+/// The entity set that traded in the current window.
+function ChurnSetNow =
+		(entity_set: anyref expr) =>
+				YearToDaySet(
+					SalesOutSet(entity_set)
+				)
+	lineageTag: 459c4761-51a9-4bde-b717-d9883649f660
+
+/// The entity set that traded over the SAME window a year earlier - never the whole prior year, so a nine-month current window is not compared against twelve.
+function ChurnSetPrior =
+		(entity_set: anyref expr) =>
+				YearToDaySet(
+					PrevYearSet(
+						SalesOutSet(entity_set)
+					)
+				)
+	lineageTag: e4c868b0-8998-4b19-b8f4-5b2d8920881e
+
+/// How many entities traded in both windows - the retained base. Counted by key with no minimum value, so a single small transaction counts.
+function ChurnKept =
+		(entity_set: anyref expr) =>
+				COUNTROWS(
+					INTERSECT(
+						ChurnSetNow(entity_set),
+						ChurnSetPrior(entity_set)
+					)
+				)
+	lineageTag: fd090b7c-c5da-4bf5-9649-4a1b11d9015a
+
+/// How many entities traded in the current window but not in the same window a year earlier - what was gained.
+function ChurnNew =
+		(entity_set: anyref expr) =>
+				COUNTROWS(
+					EXCEPT(
+						ChurnSetNow(entity_set),
+						ChurnSetPrior(entity_set)
+					)
+				)
+	lineageTag: f2ef73e9-270e-4d8a-b36c-295f89f91971
+
+/// How many entities traded a year earlier but not in the current window - what fell away. Counted by key with no minimum value, so a one-off buyer counts the same as a regular one.
+function ChurnLost =
+		(entity_set: anyref expr) =>
+				COUNTROWS(
+					EXCEPT(
+						ChurnSetPrior(entity_set),
+						ChurnSetNow(entity_set)
+					)
+				)
+	lineageTag: c830d2b9-d40c-42cd-82c8-ae7d71b3c958
+
+/// Percentage difference (current - prior) / prior for a measure whose prior value is normally positive. Blank when both are blank, or the current value is blank on a future date; 1 when the current value exists but the prior is blank on a past date, or the prior is negative.
+function IndexDif =
+		(CurrentValue: decimal val, PriorValue: decimal val) =>
+				VAR _is_actual_blank = ISBLANK(CurrentValue)
+				VAR _is_prior_blank = ISBLANK(PriorValue)
+				VAR _is_future_date = MAX(DimDate[Date]) > TODAY()
+				VAR _is_past_date = MAX(DimDate[Date]) < TODAY()
+				RETURN
+					SWITCH(
+						TRUE(),
+						_is_actual_blank && _is_prior_blank, BLANK(),
+						_is_actual_blank && _is_future_date && NOT (_is_prior_blank), BLANK(),
+						NOT (_is_actual_blank) && _is_prior_blank && _is_past_date, 1,
+						NOT (_is_actual_blank) && PriorValue < 0, 1,
+						DIVIDE(
+							CurrentValue - PriorValue,
+							PriorValue
+						)
+					)
+	lineageTag: 28117562-b830-4842-acc2-ac1343a56804
+
+/// Dynamic format string for an index: a down arrow below Center, an up arrow at or above it, then the value as a percentage with one decimal.
+function IndexFormat =
+		(Amount: double val, Center: double val) =>
+				VAR _arrow = IF(Amount < Center, UNICHAR(9660), UNICHAR(9650))    -- ▼ / ▲
+				VAR _format_string = _arrow & " #,0.0%"
+				RETURN
+					_format_string & ";" & _format_string
+	lineageTag: 25d9fd2e-0c5b-42df-8247-f2c6c9208cc2
+
+/// Theme sentiment color name ("good"/"bad"/"neutral") for CurrentValue's position relative to Center. Center is the neutral point: 0 for a difference, 1 for a ratio - passing the wrong center silently marks every decline as "good" on a ratio. Feeds Field-value conditional formatting so RAG colors follow theme switches instead of frozen hex. Blank-safe.
+function RagColor =
+		(CurrentValue: decimal val, Center: decimal val) =>
+				SWITCH(
+					TRUE(),
+					ISBLANK(CurrentValue), BLANK(),
+					CurrentValue > Center, "good",
+					CurrentValue < Center, "bad",
+					"neutral"
+				)
+	lineageTag: cf8aaf5a-feb9-4560-b176-dfbd9810f024
+
+/// Dynamic format string for an amount in compact form: whole units below 1,000, then K, M and B with three significant digits. Signed adds a plus sign to positive values. Returns a literal format string, so the measure stays numeric.
+function NumberFormat =
+		(Amount: decimal val, Signed: boolean val) =>
+				VAR _abs = ABS(Amount)
+				-- outer SWITCH picks the unit, inner one the band; band edges sit where three-digit
+				-- rounding carries over (9,995 -> 10.0K); the last line of each unit is the step-up (999.6 -> 1.0K)
+				VAR _text =
+					SWITCH(
+						TRUE(),
+						_abs < 999.5, FORMAT(ROUND(_abs, 0), "#,0"),                     -- 0 - 999
+						_abs < 999.5E3,
+							SWITCH(
+								TRUE(),
+								_abs >= 99950, FORMAT(ROUND(_abs, -3) / 1E3, "#,0"),     -- 100K - 999K
+								_abs >= 9995,  FORMAT(ROUND(_abs, -2) / 1E3, "0.0"),     -- 10.0K - 99.9K
+								_abs >= 1E3,   FORMAT(ROUND(_abs, -1) / 1E3, "0.00"),    -- 1.00K - 9.99K
+								FORMAT(1, "0.0")                                          -- 1.0K (FORMAT keeps the culture's decimal mark)
+							) & "K",
+						_abs < 999.5E6,
+							SWITCH(
+								TRUE(),
+								_abs >= 99.95E6, FORMAT(ROUND(_abs, -6) / 1E6, "#,0"),
+								_abs >= 9.995E6, FORMAT(ROUND(_abs, -5) / 1E6, "0.0"),
+								_abs >= 1E6,     FORMAT(ROUND(_abs, -4) / 1E6, "0.00"),
+								FORMAT(1, "0.0")
+							) & "M",
+						SWITCH(
+							TRUE(),
+							_abs >= 99.95E9, FORMAT(ROUND(_abs, -9) / 1E9, "#,0"),           -- 100B and up: whole billions
+							_abs >= 9.995E9, FORMAT(ROUND(_abs, -8) / 1E9, "0.0"),
+							_abs >= 1E9,     FORMAT(ROUND(_abs, -7) / 1E9, "0.00"),
+							FORMAT(1, "0.0")
+						) & "B"
+					)
+				-- opening quote plus sign; anything between -0.5 and 0.5 rounds to 0 and gets no sign
+				VAR _literal = IF(Amount <= -0.5, """-", IF(Signed && Amount >= 0.5, """+", """")) & _text & """"
+				RETURN
+					SUBSTITUTE("#;#;#", "#", _literal)                                    -- same literal for positive;negative;zero
+	lineageTag: aa394a48-edc3-483e-8845-ca70600a5d08
+
+/// One UI text from Labels, in the viewer's culture (User Culture): the row for this label type, owner type and owner number. Every label measure is a call to it. A missing row shows a warning glyph, never a quiet fallback.
+function LabelText =
+		(LabelType: string val, OwnerType: string val, OwnerNumber: int64 val) =>
+				VAR _culture = [User Culture]
+				RETURN
+					CALCULATE(
+						SELECTEDVALUE( Labels[Label], "⚠" ),
+						Labels[LabelType] = LabelType,
+						Labels[OwnerType] = OwnerType,
+						Labels[OwnerNumber] = OwnerNumber,
+						Labels[Culture] = _culture
+					)
+	lineageTag: 493df3a4-4fd8-4333-9330-cc1686bb6732
